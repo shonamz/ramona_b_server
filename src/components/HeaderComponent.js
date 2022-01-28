@@ -4,6 +4,11 @@ import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
     Form, FormGroup, Input, Label } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+
 class Header extends Component {
 
     constructor(props) {
@@ -16,6 +21,8 @@ class Header extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleRegister = this.handleRegister.bind(this);
+
     }
 
     toggleNav() {
@@ -33,6 +40,12 @@ class Header extends Component {
     handleLogin(event) {
         this.toggleModal();
         this.props.loginUser({username: this.username.value, password: this.password.value});
+        event.preventDefault();
+
+    }
+    handleRegister(event) {
+        this.toggleModal();
+        this.props.registerUser({username: this.username.value, password: this.password.value});
         event.preventDefault();
 
     }
@@ -103,6 +116,12 @@ class Header extends Component {
                                     }
 
                                 </NavItem>
+                                <NavItem>
+                                        <Button outline onClick={this.toggleModal}>
+                                            <span className="fa fa-sign-in fa-lg"></span> Register
+                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                        </Button>
+                                </NavItem>
                             </Nav>
                         </Collapse>
                     </div>
@@ -135,10 +154,40 @@ class Header extends Component {
                                 <Label check>
                                     <Input type="checkbox" name="remember"
                                     innerRef={(input) => this.remember = input}  />
-                                    Remember me
+                                    Remember Me
                                 </Label>
                             </FormGroup>
                             <Button type="submit" value="submit" color="primary">Login</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Register</ModalHeader>
+                    <ModalBody>
+                        <Form onSubmit={this.handleLogin}>
+                            <FormGroup>
+                                <Label htmlFor="username">Username</Label>
+                                <Input type="text" id="username" name="username"
+                                    innerRef={(input) => this.username = input} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="password">Password</Label>
+                                <Input type="password" id="password" name="password"
+                                    innerRef={(input) => this.password = input}  />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="password">Repeat Password</Label>
+                                <Input type="password" id="password" name="password"
+                                    innerRef={(input) => this.password = input}  />
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="checkbox" name="remember"
+                                    innerRef={(input) => this.remember = input}  />
+                                    Remember me
+                                </Label>
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary">Register</Button>
                         </Form>
                     </ModalBody>
                 </Modal>
