@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Favorites from './FavoriteComponent';
-import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders, loginUser, logoutUser, fetchFavorites, postFavorite, deleteFavorite } from '../redux/ActionCreators';
+import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders, loginUser, logoutUser,registerUser, fetchFavorites, postFavorite, deleteFavorite } from '../redux/ActionCreators';
   
  
 
@@ -35,6 +35,7 @@ fetchPromos: () => {dispatch(fetchPromos())},
 fetchLeaders: () => dispatch(fetchLeaders()),
 postFeedback: (feedback) => dispatch(postFeedback(feedback)),
 loginUser: (creds) => dispatch(loginUser(creds)),
+registerUser: (creds) => dispatch(registerUser(creds)),
 logoutUser: () => dispatch(logoutUser()),
 fetchFavorites: () => dispatch(fetchFavorites()),
 postFavorite: (dishId) => dispatch(postFavorite(dishId)),
@@ -113,7 +114,8 @@ render() {
     <div>
       <Header auth={this.props.auth} 
         loginUser={this.props.loginUser} 
-        logoutUser={this.props.logoutUser} 
+        logoutUser={this.props.logoutUser}
+        registerUser={this.props.registerUser}
         />   
       <TransitionGroup>
         <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>

@@ -10,9 +10,6 @@ import { InitialFeedback } from './forms';
 import { Auth } from './auth';
 import { favorites } from './favorites';
 
-
-
-
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({

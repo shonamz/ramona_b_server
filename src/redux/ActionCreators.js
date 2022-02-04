@@ -400,66 +400,35 @@ export const addFavorites = (favorites) => ({
     payload: favorites
 });
 
+export const addUser = (newUser) => ({
+    type: ActionTypes.ADD_USER,
+    payload: newUser
+});
 
-export const requesRegister = (creds) => {
-    return {
-        type: ActionTypes.REGISTER_REQUEST,
-        creds
-    }
-}
-  
-export const receiveRegister = (response) => {
-    return {
-        type: ActionTypes.REGISTER_SUCCESS,
-        token: response.token
-    }
-}
-  
-export const registerError = (message) => {
-    return {
-        type: ActionTypes.REGISTER_FAILURE,
-        message
-    }
-}
+export const registerUser = (newUser) => (dispatch) => {
 
-// export const registerUser = (creds) => (dispatch) => {
-//     // We dispatch requestLogin to kickoff the call to the API
-//     dispatch(requestLogin(creds))
-
-//     return fetch(baseUrl + 'users/login', {
-//         method: 'POST',
-//         headers: { 
-//             'Content-Type':'application/json' 
-//         },
-//         body: JSON.stringify(creds)
-//     })
-//     .then(response => {
-//         if (response.ok) {
-//             return response;
-//         } else {
-//             var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//             error.response = response;
-//             throw error;
-//         }
-//         },
-//         error => {
-//             throw error;
-//         })
-//     .then(response => response.json())
-//     .then(response => {
-//         if (response.success) {
-//             // If login was successful, set the token in local storage
-//             localStorage.setItem('token', response.token);
-//             localStorage.setItem('creds', JSON.stringify(creds));
-//             // Dispatch the success action
-//             dispatch(fetchFavorites());
-//             dispatch(receiveLogin(response));
-//         }
-//         else {
-//             var error = new Error('Error ' + response.status);
-//             error.response = response;
-//             throw error;
-//         }
-//     })
-//     .catch(error => dispatch(loginError(error.message)))
-// };
+    return fetch(baseUrl + 'users/signup', {
+        method: "POST",
+        body: JSON.stringify(newUser),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            throw error;
+      })
+    .then(response => response.json())
+    .then(response => dispatch(addUser(response)))
+    .then(response => { console.log('newUser', response); alert('Thank you for your Register!\n'+JSON.stringify(response)); })
+    .catch(error =>  { console.log('NewUser', error.message); alert('Your could not register\nError: '+error.message); });
+};

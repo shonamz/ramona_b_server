@@ -22,7 +22,8 @@ export const Auth = (state = {
                 isLoading: false,
                 isAuthenticated: true,
                 errMess: '',
-                token: action.token
+                token: action.token,
+                 
             };
         case ActionTypes.LOGIN_FAILURE:
             return {...state,
@@ -42,6 +43,25 @@ export const Auth = (state = {
                 token: '',
                 user: null
             };
+        // case ActionTypes.REGISTER_REQUEST:
+        //     return {...state,
+        //         isLoading: true,
+        //         isAuthenticated: false,
+        //         user: action.creds
+        //     };
+        // case ActionTypes.REGISTER_SUCCESS:
+        //     return {...state,
+        //         isLoading: false,
+        //         isAuthenticated: true,
+        //         errMess: '',
+        //         token: action.token
+        //     };
+        // case ActionTypes.REGISTER_FAILURE:
+        //     return {...state,
+        //         isLoading: false,
+        //         isAuthenticated: false, 
+        //         errMess: action.message
+        //     };
         default:
             return state
     }
