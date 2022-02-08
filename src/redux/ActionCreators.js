@@ -188,9 +188,20 @@ export const addLeaders = (leaders) => ({
     payload: leaders
 });
 
+
+export const feedbackFailed = (errmess) => ({
+    type: ActionTypes.FEEDBACK_FAILED,
+    payload: errmess
+  });
+  
+  export const addFeedback = (feedback) => ({
+    type: ActionTypes.ADD_FEEDBACK,
+    payload: feedback
+  });
+
 export const postFeedback = (feedback) => (dispatch) => {
         
-    return fetch(baseUrl + 'feedback', {
+    return fetch(baseUrl + 'feedbacks', {
         method: "POST",
         body: JSON.stringify(feedback),
         headers: {
@@ -211,6 +222,7 @@ export const postFeedback = (feedback) => (dispatch) => {
             throw error;
       })
     .then(response => response.json())
+    .then(response => dispatch(addFeedback(response)))
     .then(response => { console.log('Feedback', response); alert('Thank you for your feedback!\n'+JSON.stringify(response)); })
     .catch(error =>  { console.log('Feedback', error.message); alert('Your feedback could not be posted\nError: '+error.message); });
 };

@@ -29,4 +29,6 @@ export const ADD_FAVORITES = 'ADD_FAVORITES';
 export const ADD_USER = 'ADD_USER';
  
 
+export const ADD_FEEDBACK = 'ADD_FEEDBACK';
+export const FEEDBACK_FAILED = 'FEEDBACK_FAILED';
  

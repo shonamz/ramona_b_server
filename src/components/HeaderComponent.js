@@ -123,7 +123,7 @@ class Header extends Component {
                                 <NavItem>
                                         <Button outline onClick={this.toggleModal2}>
                                             <span className="fa fa-sign-in fa-lg"></span> Register
-                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                                <span className="fa fa-pulse fa-fw"></span>
                                         </Button>
                                 </NavItem>
                             </Nav>

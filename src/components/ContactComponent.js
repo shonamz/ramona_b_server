@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem,
     Button, Row, Col, Label } from 'reactstrap'; 
-import { Control,  Errors } from 'react-redux-form';
-import {  Form } from 'react-redux-form';
+import { Control,  Errors , Form} from 'react-redux-form';
+// import {  Form } from 'react-redux-form';
 
 
 
@@ -40,7 +40,7 @@ class Contact extends Component {
 
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+       // alert('Current State is: ' + JSON.stringify(values));
         this.props.resetFeedbackForm();
         // event.preventDefault();
         this.props.postFeedback(values);
@@ -74,9 +74,9 @@ class Contact extends Component {
                         <i className="fa fa-envelope"></i>: <a href="mailto:ramona@food.net">ramona@food.net</a>
                         </address>
                 </div>
-                <div className="col-12 col-sm-6 offset-sm-1">
+                {/* <div className="col-12 col-sm-6 offset-sm-1">
                     <h5>Map of our Location</h5>
-                </div>
+                </div> */}
                 <div className="col-12 col-sm-11 offset-sm-1">
                     <div className="btn-group" role="group">
                         <a role="button" className="btn btn-primary" href="tel:+3102345678"><i className="fa fa-phone"></i> Call</a>

@@ -40,7 +40,7 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
     }  
 
    function RenderComments({comments, postComment, dishId}) {
-    if (comments != null)
+    if (comments!= null)
         return(
             <div className="col-12 col-md-5 m-1">
                 <h4>Comments</h4>

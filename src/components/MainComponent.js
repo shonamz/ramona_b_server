@@ -70,12 +70,15 @@ render() {
   }
 
   const DishWithId = ({match}) => {
-    if(this.props.favorites.favorites!=null){
+    if(this.props.favorites.favorites!='' && this.props.favorites.favorites!= null ){
+      console.log("here");
     if(Array.isArray(this.props.favorites.favorites))
     this.props.favorites.favorites=this.props.favorites.favorites[0];
+     console.log("here 2")
+     console.log(this.props.favorites.favorites)
     }
     return(
-    (this.props.auth.isAuthenticated && !this.props.favorites.isLoading)
+    (this.props.auth.isAuthenticated && !this.props.favorites.isLoading && this.props.favorites.favorites!='' && this.props.favorites.favorites!= null )
     ?
     <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
     isLoading={this.props.dishes.isLoading}
