@@ -444,3 +444,66 @@ export const registerUser = (newUser) => (dispatch) => {
     .then(response => { console.log('newUser', response); alert('Thank you for your Register!\n'+JSON.stringify(response)); })
     .catch(error =>  { console.log('NewUser', error.message); alert('Your could not register\nError: '+error.message); });
 };
+
+
+export const LOGIN_REQUEST_FACEBOOK = 'LOGIN_REQUEST_FACEBOOK';
+export const LOGIN_SUCCESS_FACEBOOK = 'LOGIN_SUCCESS_FACEBOOK';
+export const LOGIN_FAILURE_FACEBOOK = 'LOGIN_FAILURE_FACEBOOK';
+
+
+export const requestLoginFacebook = () => {
+    return {
+        type: ActionTypes.LOGIN_REQUEST_FACEBOOK
+    }
+}
+  
+export const receiveLoginFacebook = (response) => {
+    return {
+        type: ActionTypes.LOGIN_SUCCESS_FACEBOOK,
+        token: response.token
+    }
+}
+  
+export const loginErrorFacebook = (message) => {
+    return {
+        type: ActionTypes.LOGIN_FAILURE_FACEBOOK,
+        message
+    }
+}
+
+export const loginUserFacebook = () => (dispatch) => {
+    // We dispatch requestLogin to kickoff the call to the API
+    dispatch(requestLoginFacebook())
+
+    return fetch(baseUrl + 'users/facebook/token')
+    .then(response => {
+        if (response.ok) {
+            console.log('resopnse...............'+response);
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            throw error;
+        })
+    .then(response => response.json())
+    .then(response => {
+        if (response.success) {
+            // If login was successful, set the token in local storage
+            localStorage.setItem('token', response.token);
+           // localStorage.setItem('creds', JSON.stringify(creds));
+            // Dispatch the success action
+            dispatch(fetchFavorites());
+            dispatch(receiveLoginFacebook(response));
+        }
+        else {
+            var error = new Error('Error ' + response.status);
+            error.response = response;
+            throw error;
+        }
+    })
+    .catch(error => dispatch(loginErrorFacebook(error.message)))
+};

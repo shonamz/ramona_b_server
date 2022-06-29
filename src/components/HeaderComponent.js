@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component , useState } from 'react';
 import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
     Button, Modal, ModalHeader, ModalBody,
     Form, FormGroup, Input, Label } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import FacebookLogin from "react-facebook-login";
 
-
+ 
 class Header extends Component {
 
     constructor(props) {
@@ -12,17 +13,22 @@ class Header extends Component {
         this.state = {
             isNavOpen: false,
             isModalOpen: false,
-            isModal2Open:false
+            isModal2Open:false,
+            isLoggedIn: false,
+            name: ""
+              
         };
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.toggleModal2 = this.toggleModal2.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleFacebook = this.handleFacebook.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
+        this.responseFacebook = this.responseFacebook.bind(this);
 
     }
-
+    
     toggleNav() {
         this.setState({
             isNavOpen: !this.state.isNavOpen
@@ -39,6 +45,13 @@ class Header extends Component {
             isModal2Open: !this.state.isModal2Open
         });
     }
+    
+    responseFacebook(response) {
+        console.log(response);
+        this.user = response.name;
+        console.log(this.user);
+        console.log(response.accessToken);
+      };
 
     handleLogin(event) {
         this.toggleModal();
@@ -46,6 +59,13 @@ class Header extends Component {
         event.preventDefault();
 
     }
+
+    handleFacebook(response){
+       // console.log(response);
+        this.toggleModal();
+        this.props.loginUserFacebook({username:response.name});
+     } 
+
     handleRegister(event) {
         this.toggleModal2();
         this.props.registerUser({username: this.username.value, password: this.password.value,firstname:this.firstname.value,lastname:this.lastname.value});
@@ -96,7 +116,7 @@ class Header extends Component {
                                     </NavLink>
                                 </NavItem>
                             </Nav>
-                            <Nav className="ml-auto" navbar>
+                            <Nav className="ml-auto " navbar>
                                 <NavItem>
                                     { !this.props.auth.isAuthenticated ?
                                         <Button outline onClick={this.toggleModal}>
@@ -107,7 +127,7 @@ class Header extends Component {
                                             }
                                         </Button>
                                         :
-                                        <div>
+                                        <div className="up">
                                         <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
                                         <Button outline onClick={this.handleLogout}>
                                             <span className="fa fa-sign-out fa-lg"></span> Logout
@@ -118,8 +138,8 @@ class Header extends Component {
                                         </Button>
                                         </div>
                                     }
-
                                 </NavItem>
+
                                 <NavItem>
                                         <Button outline onClick={this.toggleModal2}>
                                             <span className="fa fa-sign-in fa-lg"></span> Register
@@ -162,6 +182,17 @@ class Header extends Component {
                                 </Label>
                             </FormGroup>
                             <Button type="submit" value="submit" color="primary">Login</Button>
+                            <br />
+                            <br />
+                            <FormGroup >
+                            <FacebookLogin  
+                            appId="435672821683794"
+                            autoLoad={false}
+                            fields="name"
+                            onClick={this.handleFacebook}
+                            callback={this.responseFacebook}
+                            /> 
+                            </FormGroup>
                         </Form>
                     </ModalBody>
                 </Modal>

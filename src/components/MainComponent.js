@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Favorites from './FavoriteComponent';
-import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders, loginUser, logoutUser,registerUser, fetchFavorites, postFavorite, deleteFavorite } from '../redux/ActionCreators';
+import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders, loginUser, logoutUser,registerUser, fetchFavorites, postFavorite, deleteFavorite, loginUserFacebook } from '../redux/ActionCreators';
   
  
 
@@ -35,6 +35,7 @@ fetchPromos: () => {dispatch(fetchPromos())},
 fetchLeaders: () => dispatch(fetchLeaders()),
 postFeedback: (feedback) => dispatch(postFeedback(feedback)),
 loginUser: (creds) => dispatch(loginUser(creds)),
+loginUserFacebook:()=>dispatch(loginUserFacebook()),
 registerUser: (creds) => dispatch(registerUser(creds)),
 logoutUser: () => dispatch(logoutUser()),
 fetchFavorites: () => dispatch(fetchFavorites()),
@@ -70,7 +71,7 @@ render() {
   }
 
   const DishWithId = ({match}) => {
-    if(this.props.favorites.favorites!='' && this.props.favorites.favorites!= null ){
+    if(this.props.favorites.favorites!=='' && this.props.favorites.favorites!== null ){
       console.log("here");
     if(Array.isArray(this.props.favorites.favorites))
     this.props.favorites.favorites=this.props.favorites.favorites[0];
@@ -78,7 +79,7 @@ render() {
      console.log(this.props.favorites.favorites)
     }
     return(
-    (this.props.auth.isAuthenticated && !this.props.favorites.isLoading && this.props.favorites.favorites!='' && this.props.favorites.favorites!= null )
+    (this.props.auth.isAuthenticated && !this.props.favorites.isLoading && this.props.favorites.favorites!=='' && this.props.favorites.favorites!= null )
     ?
     <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
     isLoading={this.props.dishes.isLoading}
@@ -118,6 +119,7 @@ render() {
       <Header auth={this.props.auth} 
         loginUser={this.props.loginUser} 
         logoutUser={this.props.logoutUser}
+        loginUserFacebook={this.props.loginUserFacebook}
         registerUser={this.props.registerUser}
         />   
       <TransitionGroup>

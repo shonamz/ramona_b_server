@@ -54,3 +54,6 @@ address{
   transform: translateX(100%);
   transition: all 300ms ease-out;
 }
+.up {
+  margin-top: -3px;
+}

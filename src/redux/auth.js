@@ -43,6 +43,26 @@ export const Auth = (state = {
                 token: '',
                 user: null
             };
+        case ActionTypes.LOGIN_REQUEST_FACEBOOK:
+            return {...state,
+                isLoading: true,
+                isAuthenticated: false,
+                user: action.creds
+            };
+        case ActionTypes.LOGIN_SUCCESS_FACEBOOK:
+            return {...state,
+                isLoading: false,
+                isAuthenticated: true,
+                errMess: '',
+               
+                    
+            };
+        case ActionTypes.LOGIN_FAILURE_FACEBOOK:
+            return {...state,
+                isLoading: false,
+                isAuthenticated: false,
+                errMess: action.message
+            };
         
         default:
             return state
